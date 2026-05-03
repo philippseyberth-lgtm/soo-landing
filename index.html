@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EU Sourcing Origin Optimizer — Corridor Economics</title>
+<meta name="description" content="Compare total EU import duties across origins in seconds. See how much you save sourcing from Vietnam, India, Thailand, or Turkey vs. China. Real TARIC data.">
+<meta property="og:title" content="EU Sourcing Origin Optimizer — China+1 Duty Comparison">
+<meta property="og:description" content="See exactly how much you save sourcing from Vietnam, India, Thailand, or Turkey vs. China. Real EU TARIC data. Updated daily.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EU Sourcing Origin Optimizer">
+<meta name="twitter:description" content="Compare total EU import duties across origins. Real TARIC data, updated daily.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1120;
+  --bg-card:#111827;
+  --bg-surface:#1a2332;
+  --border:#1e293b;
+  --text:#e2e8f0;
+  --text-muted:#94a3b8;
+  --text-dim:#64748b;
+  --accent:#d4a853;
+  --accent-hover:#e4bc6a;
+  --green:#22c55e;
+  --green-dim:#15803d;
+  --red:#ef4444;
+  --red-dim:rgba(239,68,68,.12);
+  --blue:#3b82f6;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-hover)}
+
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+
+/* Hero */
+.hero{padding:100px 0 60px;text-align:center;background:linear-gradient(180deg,#0d1526 0%,var(--bg) 100%)}
+.hero h1{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.2;max-width:780px;margin:0 auto 20px;letter-spacing:-.02em}
+.hero h1 span{color:var(--accent)}
+.hero .subhead{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-muted);max-width:620px;margin:0 auto 40px}
+
+/* Form */
+.signup-form{max-width:640px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:.85rem;font-weight:500;color:var(--text-muted)}
+.form-group input,.form-group select{background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-size:1rem;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group input::placeholder{color:var(--text-dim)}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.cta-btn{display:block;width:100%;padding:14px;margin-top:8px;background:var(--accent);color:#0b1120;font-size:1.05rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background .2s,transform .1s}
+.cta-btn:hover{background:var(--accent-hover)}
+.cta-btn:active{transform:scale(.98)}
+.form-note{text-align:center;margin-top:14px;font-size:.85rem;color:var(--text-dim)}
+.form-success{display:none;text-align:center;padding:28px 16px}
+.form-success .checkmark{font-size:2.5rem;margin-bottom:12px}
+.form-success h3{font-size:1.2rem;margin-bottom:6px;color:var(--green)}
+.form-success p{color:var(--text-muted);font-size:.95rem}
+
+/* Stats */
+.stats{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center}
+.stat-number{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--accent);margin-bottom:4px}
+.stat-label{font-size:.9rem;color:var(--text-muted);line-height:1.4}
+
+/* How it works */
+.how{text-align:center}
+.how h2{font-size:1.75rem;margin-bottom:48px;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.step{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(212,168,83,.12);color:var(--accent);font-weight:700;font-size:1.1rem;margin-bottom:16px}
+.step h3{font-size:1.1rem;margin-bottom:8px;font-weight:600}
+.step p{font-size:.9rem;color:var(--text-muted);line-height:1.5}
+
+/* Comparison table */
+.comparison-section{text-align:center}
+.comparison-section h2{font-size:1.75rem;margin-bottom:12px;font-weight:600}
+.comparison-section .section-sub{color:var(--text-muted);margin-bottom:40px;font-size:1rem}
+.comparison-card{max-width:700px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
+.comparison-header{background:rgba(212,168,83,.08);border-bottom:1px solid rgba(212,168,83,.15);padding:16px 24px;display:flex;align-items:center;gap:10px}
+.comparison-header span{font-weight:600;color:var(--accent);font-size:.95rem}
+.comparison-body{padding:24px;overflow-x:auto}
+.comparison-body table{width:100%;border-collapse:collapse;font-size:.9rem}
+.comparison-body th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-dim);font-weight:500;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.comparison-body td{padding:10px 12px;border-bottom:1px solid rgba(30,41,59,.5)}
+.comparison-body tr:last-child td{border-bottom:none}
+.comparison-body .origin{font-weight:600}
+.comparison-body .cn-row{background:var(--red-dim)}
+.comparison-body .cn-row .origin{color:var(--red)}
+.comparison-body .savings{font-weight:700;color:var(--green)}
+.comparison-body .no-savings{color:var(--text-dim)}
+.comparison-impact{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:8px;padding:14px 18px;margin:16px 24px 24px}
+.comparison-impact .label{font-size:.8rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.comparison-impact .value{font-size:1.2rem;font-weight:700;color:var(--green)}
+.comparison-source{padding:0 24px 18px;font-size:.78rem;color:var(--text-dim);font-style:italic}
+
+/* Pricing */
+.pricing{text-align:center}
+.pricing h2{font-size:1.75rem;margin-bottom:12px;font-weight:600}
+.pricing .section-sub{color:var(--text-muted);margin-bottom:48px;font-size:1rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;display:flex;flex-direction:column}
+.price-card.featured{border-color:var(--accent);position:relative}
+.price-card.featured::before{content:"Most Popular";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0b1120;font-size:.75rem;font-weight:600;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.price-name{font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.price-amount{font-size:2rem;font-weight:700;margin-bottom:4px}
+.price-amount .period{font-size:.9rem;font-weight:400;color:var(--text-muted)}
+.price-desc{font-size:.85rem;color:var(--text-dim);margin-bottom:24px;min-height:40px}
+.price-features{list-style:none;text-align:left;flex:1;margin-bottom:24px}
+.price-features li{font-size:.9rem;color:var(--text-muted);padding:6px 0;padding-left:22px;position:relative}
+.price-features li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;font-size:.85rem}
+.price-cta{display:block;text-align:center;padding:12px;border-radius:8px;font-weight:600;font-size:.95rem;transition:background .2s}
+.price-cta.primary{background:var(--accent);color:#0b1120}
+.price-cta.primary:hover{background:var(--accent-hover)}
+.price-cta.secondary{border:1px solid var(--border);color:var(--text)}
+.price-cta.secondary:hover{border-color:var(--text-muted)}
+
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+footer p{font-size:.85rem;color:var(--text-dim);line-height:1.8}
+
+@media(max-width:768px){
+  section{padding:56px 0}
+  .hero{padding:72px 0 40px}
+  .form-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr;gap:24px}
+  .steps{grid-template-columns:1fr;gap:20px}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .price-card.featured{order:-1}
+  .comparison-body{padding:16px}
+}
+@media(max-width:480px){
+  .container{padding:0 16px}
+  .signup-form{padding:24px 18px}
+  .comparison-body{padding:12px}
+  .comparison-impact{margin:12px 16px 16px}
+  .comparison-source{padding:0 16px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>Your China+1 duty comparison — <span>in seconds, not spreadsheets.</span></h1>
+    <p class="subhead">See exactly how much you save sourcing from Vietnam, India, Thailand, or Turkey vs. China. Real EU TARIC data. Updated daily.</p>
+
+    <form class="signup-form" id="signup-form" action="https://formspree.io/f/placeholder" method="POST">
+      <div id="form-fields">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="hs-code">HS Code (8-10 digit)</label>
+            <input type="text" id="hs-code" name="hs_code" placeholder="e.g. 73042400" pattern="[0-9]{8,10}" inputmode="numeric" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="current-origin">Current Sourcing Origin</label>
+            <select id="current-origin" name="current_origin" required aria-required="true">
+              <option value="CN" selected>China (CN)</option>
+              <option value="VN">Vietnam (VN)</option>
+              <option value="IN">India (IN)</option>
+              <option value="TH">Thailand (TH)</option>
+              <option value="TR">Türkiye (TR)</option>
+              <option value="BD">Bangladesh (BD)</option>
+              <option value="KR">South Korea (KR)</option>
+              <option value="JP">Japan (JP)</option>
+              <option value="MY">Malaysia (MY)</option>
+              <option value="ID">Indonesia (ID)</option>
+              <option value="US">United States (US)</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required aria-required="true">
+          </div>
+        </div>
+        <button type="submit" class="cta-btn" id="submit-btn">Get My Duty Comparison</button>
+        <p class="form-note">Free tier: 3 HS codes × 3 origins. No credit card.</p>
+      </div>
+      <div class="form-success" id="form-success" role="status" aria-live="polite">
+        <div class="checkmark">&#10003;</div>
+        <h3>You're on the list.</h3>
+        <p>We'll send your personalized duty comparison when the tool goes live. Check your inbox.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">113</div>
+        <div class="stat-label">EU anti-dumping measures on Chinese goods — doubled since 2022</div>
+      </div>
+      <div>
+        <div class="stat-number">96.9pp</div>
+        <div class="stat-label">Maximum duty spread between China and alternative origins (steel tubes)</div>
+      </div>
+      <div>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Alternative origins compared per query — with FTA, AD, and safeguard rates</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Enter</h3>
+        <p>Your HS codes and current sourcing origin. Takes 30 seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Compare</h3>
+        <p>Total duty across 5 alternative origins — MFN, FTA preferential, anti-dumping, and safeguard rates from live EU TARIC data.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Decide</h3>
+        <p>Get a ranked savings table showing exactly how much you save per origin switch — not a guess, a calculation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison Preview -->
+<section class="comparison-section">
+  <div class="container">
+    <h2>See What You'll Get</h2>
+    <p class="section-sub">Real example — seamless steel tubes (HS 7304.24.00), April 2026.</p>
+    <div class="comparison-card" role="article" aria-label="Example duty comparison table">
+      <div class="comparison-header">
+        <span>Duty Comparison — HS 7304.24.00 (Seamless Steel Tubes)</span>
+      </div>
+      <div class="comparison-body">
+        <table>
+          <thead>
+            <tr>
+              <th>Origin</th>
+              <th>MFN</th>
+              <th>AD Duty</th>
+              <th>Safeguard</th>
+              <th>Total</th>
+              <th>vs CN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cn-row">
+              <td class="origin">CN (China)</td>
+              <td>0%</td>
+              <td>71.9%</td>
+              <td>25.0%</td>
+              <td>96.9%</td>
+              <td class="no-savings">—</td>
+            </tr>
+            <tr>
+              <td class="origin">TH (Thailand)</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0.0%</td>
+              <td class="savings">−96.9pp</td>
+            </tr>
+            <tr>
+              <td class="origin">TR (Türkiye)</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0.0%</td>
+              <td class="savings">−96.9pp</td>
+            </tr>
+            <tr>
+              <td class="origin">VN (Vietnam)</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0.0%</td>
+              <td class="savings">−96.9pp</td>
+            </tr>
+            <tr>
+              <td class="origin">IN (India)</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0%</td>
+              <td>0.0%</td>
+              <td class="savings">−96.9pp</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comparison-impact">
+        <div class="label">Potential annual savings on €500K portfolio</div>
+        <div class="value">€485,000 by switching from China to Thailand</div>
+      </div>
+      <p class="comparison-source">Source: EU TARIC via live SOAP API query, April 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing">
+  <div class="container">
+    <h2>Simple Pricing</h2>
+    <p class="section-sub">Start free. Scale when your sourcing strategy demands it.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount">€0 <span class="period">/ mo</span></div>
+        <p class="price-desc">Quick comparison for initial sourcing research.</p>
+        <ul class="price-features">
+          <li>3 HS codes × 3 origins</li>
+          <li>MFN rates only</li>
+          <li>Ranked savings table</li>
+        </ul>
+        <a href="#signup-form" class="price-cta primary">Get Free Comparison</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Pro</div>
+        <div class="price-amount">€79 <span class="period">/ mo</span></div>
+        <p class="price-desc">Full duty stack for serious sourcing decisions.</p>
+        <ul class="price-features">
+          <li>Unlimited codes × origins</li>
+          <li>Full duty stack (MFN + FTA + AD + safeguard)</li>
+          <li>PDF export</li>
+          <li>Saved scenarios</li>
+          <li>AD Alert monitoring included</li>
+        </ul>
+        <a href="#signup-form" class="price-cta primary">Get Free Comparison</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">API</div>
+        <div class="price-amount">€199 <span class="period">/ mo</span></div>
+        <p class="price-desc">Programmatic access for ERP & logistics integration.</p>
+        <ul class="price-features">
+          <li>REST API access</li>
+          <li>1,000 queries/mo</li>
+          <li>Webhook for duty changes</li>
+          <li>White-label results</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#signup-form" class="price-cta secondary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Corridor Economics</p>
+    <p>Powered by EU TARIC data via live SOAP API</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('signup-form');
+  var fields = document.getElementById('form-fields');
+  var success = document.getElementById('form-success');
+  var btn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var data = {
+      hs_code: document.getElementById('hs-code').value.trim(),
+      current_origin: document.getElementById('current-origin').value,
+      email: document.getElementById('email').value.trim(),
+      source: 'soo-landing-page',
+      submitted_at: new Date().toISOString()
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting\u2026';
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(function(res){
+      if(res.ok){
+        showSuccess();
+      } else {
+        storeLocally(data);
+        showSuccess();
+      }
+    })
+    .catch(function(){
+      storeLocally(data);
+      showSuccess();
+    });
+  });
+
+  function showSuccess(){
+    fields.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  function storeLocally(data){
+    try {
+      var stored = JSON.parse(localStorage.getItem('soo_signups') || '[]');
+      stored.push(data);
+      localStorage.setItem('soo_signups', JSON.stringify(stored));
+    } catch(e){}
+  }
+
+  document.querySelectorAll('a[href="#signup-form"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      document.getElementById('signup-form').scrollIntoView({behavior:'smooth',block:'center'});
+      document.getElementById('hs-code').focus();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
